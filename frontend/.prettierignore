@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+build/
+
+# Coverage and generated files
+coverage/
+next-env.d.ts
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Lock files
+package-lock.json
