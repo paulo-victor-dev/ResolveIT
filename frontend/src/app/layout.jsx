@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-    title: "WebApp Template",
-    description: "WebApp Template",
+    title: "ResolveIT",
+    description: "IT Help Desk",
 };
 
 export default function RootLayout({ children }) {

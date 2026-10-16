@@ -1,25 +1,30 @@
 "use client";
 
+import { LayoutDashboard, FileSpreadsheet } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 
-import { logoutAction } from "@/actions/authActions";
-
-import { Button } from "@/components/ui/button";
+import PageLayout from "@/components/layout/pageLayout";
 
 export default function Dashboard() {
     const router = useRouter();
 
-    const handleLogout = async () => {
-        await logoutAction();
+    const pageConfig = {
+        page: {
+            title: "Dashboard",
+            icon: <LayoutDashboard />,
+        },
 
-        router.refresh();
-    };
+        button: {
+            text: "Gerar Relatório",
+            icon: <FileSpreadsheet />,
+        },
+    }
 
     return (
-        <div className="flex flex-col gap-5">
-            <h1>DashBoard Page</h1>
-
-            <Button onClick={handleLogout}>Logout</Button>
-        </div>
+    
+        <PageLayout pageConfig={pageConfig}>
+            <h1>DashBoard children</h1>
+        </PageLayout>
     );
 }

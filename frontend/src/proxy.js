@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 
-const publicRoutes = ["/login"];
+const publicRoutes = [
+    "/login"
+];
 
-const privateRoutes = ["/dashboard"];
+const privateRoutes = [
+    // "/dashboard",
+    // "/tickets"
+];
 
 export function proxy(request) {
     const { pathname } = request.nextUrl;
