@@ -39,7 +39,13 @@ export default function Navlinks({ sidebarState }) {
                     )}>
                         <span>{val.icon}</span>
 
-                        <span>{val.label}</span>
+                        <span
+                            className={cn(
+                                ""
+                            )}
+                        >
+                            {val.label}
+                        </span>
                     </Link>
                 </li>
             ))}

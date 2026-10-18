@@ -51,7 +51,7 @@ export default function Sidebar() {
 
             <DropdownMenu>
                 <DropdownMenuTrigger render={
-                    <UserArea sidebarState={{ isClosed }} isDark={isDark} />
+                    <UserArea sidebarState={{ isClosed }} />
                 } />
 
                 <DropdownMenuContent className={isClosed && "w-50"}>
@@ -60,7 +60,6 @@ export default function Sidebar() {
                         className="flex items-center cursor-pointer"
                     >
                         {isDark? <Moon /> : <Sun />}
-                        
 
                         <div className="flex flex-col">
                             {isDark? "Tema escuro" : "Tema claro"}

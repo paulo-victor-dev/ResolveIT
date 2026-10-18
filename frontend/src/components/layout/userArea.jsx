@@ -8,7 +8,7 @@ import { cn } from "cn";
 
 import { Code } from "lucide-react";
 
-export default function UserArea({ sidebarState, isDark, className, ...props }) {
+export default function UserArea({ sidebarState, ...props }) {
     const { isClosed } = sidebarState;
     const [user, setUser] = useState(null);
 
@@ -38,8 +38,7 @@ export default function UserArea({ sidebarState, isDark, className, ...props }) 
                 "outline outline-offset-6",
                 "transition-colors duration-200",
                 "hover:outline-muted-fg",
-                isDark ? "outline-muted-bg" : "outline-border",
-                className
+                "outline-border",
             )}
         >
             <div className={cn(
