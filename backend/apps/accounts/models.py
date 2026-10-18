@@ -6,6 +6,11 @@ from .managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    class Role(models.TextChoices):
+        COMMON = "common", "Usuário"
+        TECHNICIAN = "technician", "Técnico"
+        ADMIN = "admin", "Administrador"
+
     username = models.CharField(
         max_length=100,
         unique=True,
@@ -15,6 +20,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         unique=True,
         verbose_name="E-mail"
+    )
+
+    role = models.CharField(
+        max_length=20,
+        choices=Role.choices,
+        default=Role.COMMON,
+        verbose_name="Função"
     )
 
     is_active = models.BooleanField(

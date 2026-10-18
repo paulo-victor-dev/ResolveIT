@@ -1,5 +1,6 @@
 from rest_framework.permissions import SAFE_METHODS, BasePermission
 
+from .models import User
 
 class UserPermission(BasePermission):
     def has_permission(self, request, view):
@@ -13,12 +14,12 @@ class UserPermission(BasePermission):
             return True
 
         # Escrita somente para admin
-        return user.is_superuser
+        return user.is_superuser or User.role == User.Role.ADMIN
 
     def has_object_permission(self, request, view, obj):
         user = request.user
 
-        if user.is_superuser:
+        if user.is_superuser or User.role == User.Role.ADMIN:
             # Admins não podem deletar a si mesmos
             if request.method == "DELETE" and obj.pk == request.user.pk:
                 return False

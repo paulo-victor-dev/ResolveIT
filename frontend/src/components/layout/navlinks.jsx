@@ -5,7 +5,8 @@ import { LayoutDashboard, Ticket } from "lucide-react";
 
 import { cn } from "cn";
 
-export default function SidebarLinks({ sidebarIsClosed }) {
+export default function Navlinks({ sidebarState }) {
+    const { isClosed } = sidebarState;
     const pathname = usePathname()
 
     const links = [
@@ -26,29 +27,19 @@ export default function SidebarLinks({ sidebarIsClosed }) {
         <ul className="h-full flex flex-col gap-2">
             {links.map((val, idx) => (
                 <li key={idx} className={cn(
-                    "w-full h-9 flex items-center",
-                    "rounded-md pl-2",
-                    "overflow-hidden",
+                    "w-full h-10 flex items-center pl-3",
+                    "rounded-md overflow-hidden",
+                    "transition-colors",
                     "hover:bg-primary hover:text-primary-foreground",
-                    "transition duration-200",
                     pathname === val.href && ("bg-primary text-primary-foreground") 
                 )}>
                     <Link href={val.href} className={cn(
-                        "w-full h-full flex items-center gap-2",
+                        "w-full h-full flex items-center gap-3",
                         "text-sm",
-                        "overflow-hidden"
                     )}>
-                        <span className="">
-                            {val.icon}
-                        </span>
+                        <span>{val.icon}</span>
 
-                        <span className={cn(
-                            "opacity-100",
-                            "transition-[visibility, opacity] duration-[250ms, 250ms]",
-                            sidebarIsClosed ? "invisible opacity-0" : ""
-                        )}>
-                            {val.label}
-                        </span>
+                        <span>{val.label}</span>
                     </Link>
                 </li>
             ))}

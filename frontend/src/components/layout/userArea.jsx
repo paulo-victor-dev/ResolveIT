@@ -2,95 +2,80 @@
 
 import { useState, useEffect } from "react";
 
-import { useRouter } from "next/navigation";
-
-import { getCurrentUserAction, logoutAction } from "@/actions/authActions";
+import { getCurrentUserAction } from "@/actions/authActions";
 
 import { cn } from "cn";
 
-import { LogOut } from "lucide-react";
+import { Code } from "lucide-react";
 
-import { Button } from "../ui/button";
-import { ThemeToggleButton } from "./themeToggleButton";
-
-export default function UserArea({ sidebarIsClosed }) {
+export default function UserArea({ sidebarState, isDark, className, ...props }) {
+    const { isClosed } = sidebarState;
     const [user, setUser] = useState(null);
-    const router = useRouter();
-
-    const handleLogout = async () => {
-        await logoutAction();
-
-        router.refresh();
-    };
-
-    const getUserAcronym = () => {
-        const username = user?.username; 
-
-        if (username) {
-            return username.slice(0, 1).toUpperCase();
-        };
-
-        return "A";
-    };
 
     useEffect(() => {
         const getUser = async () => {
             const user = await getCurrentUserAction();
-
             setUser(user);
         };
 
         getUser();
     }, []);
 
+    const getUserAcronym = () => {
+        const username = user?.username; 
+
+        if (!username) return "A";
+
+        return username.slice(0, 1).toUpperCase();
+    };
+
     return (
-        <div 
+        <button 
+            {...props}
             className={cn(
-                "flex items-center justify-between px-2"
+                "w-full h-12 flex items-center px-1 gap-1",
+                "rounded-sm cursor-pointer overflow-hidden relative",
+                "outline outline-offset-6",
+                "transition-colors duration-200",
+                "hover:outline-muted-fg",
+                isDark ? "outline-muted-bg" : "outline-border",
+                className
             )}
         >
             <div className={cn(
-                "flex items-center gap-1",
-                "transition-transform duration-300",
-                sidebarIsClosed? "-translate-x-50" : "translate-x-0"
+                "w-full h-full flex items-center gap-3",
             )}>
                 <span className={cn(
-                    "w-8 flex items-center justify-center p-2 rounded-md",
-                    "text-primary-foreground font-semibold text-xs uppercase",
-                    "bg-primary",
+                    "h-full w-9 flex items-center justify-center",
+                    "absolute rounded-md text-sm",
+                    "bg-primary text-primary-foreground",
                 )}>
                     {getUserAcronym()}
                 </span>
 
                 <div className={cn(
-                    "w-28 flex flex-col justify-center text-nowrap"
+                    "max-w-30 flex flex-col text-start ml-12",
+                    "text-nowrap",
+                    "transition-[visibility] duration-200",
+                    isClosed && "invisible",
                 )}>
-                    <span className="font-semibold overflow-hidden text-ellipsis text-xs">
+                    <span className="font-semibold text-sm overflow-hidden text-ellipsis">
                         {user?.username}
                     </span>
 
-                    <span className="text-xs overflow-hidden text-ellipsis text-muted-foreground">
-                        {user?.role}
+                    <span className="text-sm text-muted-fg overflow-hidden text-ellipsis">
+                        {user?.role_display}
                     </span>
                 </div>
             </div>
 
-            {/* Arrumar aqui e criar DropDown, o do ShadCn está ruim */}
-
-            <ThemeToggleButton className="w-8 h-8" />
-
-            <Button
-                variant="destructive" 
-                onClick={handleLogout}
-                className={cn(
-                    "w-8 h-8",
-                    "transition-transform duration-300",
-                    sidebarIsClosed ? "-translate-x-40" : ""
-                )}
-            >
-                <LogOut size={20} />
-            </Button>
-        </div>
+            <Code size={18} className={cn(
+                "text-muted-fg",
+                "rotate-90",
+                "transition-[visibility] duration-200",
+                isClosed && "invisible"
+            )} />
+        </button>
     );
 
 }

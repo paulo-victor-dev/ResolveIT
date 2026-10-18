@@ -11,6 +11,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = (
         "email", 
         "username", 
+        "role", 
         "is_superuser",
         "is_staff",
         "is_active", 
@@ -24,6 +25,7 @@ class CustomUserAdmin(UserAdmin):
 
     list_filter = (
         "is_active", 
+        "role", 
         "is_staff",
         "is_superuser"
     )
@@ -40,6 +42,7 @@ class CustomUserAdmin(UserAdmin):
         ("Informações pessoais", {
             "fields": (
                 "username",
+                "role",
             )
         }),
         ("Permissões", {
@@ -65,6 +68,7 @@ class CustomUserAdmin(UserAdmin):
             "fields": (
                 "email",
                 "username",
+                "role",
                 "password1",
                 "password2",
                 "is_active",

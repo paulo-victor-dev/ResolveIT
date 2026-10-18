@@ -1,59 +1,88 @@
 "use client";
 
-import Image from "next/image";
+import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 
 import { cn } from "cn";
 
-import { PanelLeftClose, PanelRightClose } from "lucide-react";
+import { Sun, Moon, LogOutIcon } from "lucide-react";
 
-import { Button } from "../ui/button";
+import { logoutAction } from "@/actions/authActions";
 
+import LogoArea from "./logoArea";
+import Navlinks from "./navlinks";
 import UserArea from "./userArea";
-import SidebarLinks from "./sidebarLinks";
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator
+} from "../ui/dropdown-menu";
 
 export default function Sidebar() {
     const [isClosed, setIsClosed] = useState(false);
+    const { theme, setTheme } = useTheme();
+    const router = useRouter();
+
+    const isDark = theme === "dark"; 
+
+    const handleLogout = async () => {
+        await logoutAction();
+        router.refresh();
+    };
 
     return (
         <aside className={cn(
             "h-full flex flex-col gap-4 p-4 overflow-hidden",
             "transition-[width] duration-250",
-            isClosed ? "w-17.5" : "w-72"
+            isClosed ? "w-20" : "w-80"
         )}>
-            <div className={cn(
-                "h-16 flex items-center justify-between",
-                isClosed ? "justify-center " : ""
-            )}>
-                <Image
-                    src="/logo.png"
-                    alt="logo-resolvelit"
-                    width={150}
-                    height={80}
-                    priority
-                    className={cn(
-                        "shrink-0 transition-transform duration-300",
-                        isClosed ? "-translate-x-full" : "translate-x-0"
-                    )}
-                />
+            <LogoArea 
+                sidebarState={{ isClosed, setIsClosed }} 
+                isDark={isDark} 
+            />
 
-                <Button
-                    variant="outline"
-                    onClick={() => setIsClosed(prev => !prev)} 
-                    className={cn(
-                        "transition duration-200",
-                        "hover:bg-muted-bg cursor-pointer",
-                        isClosed ? "mr-9" : ""
-                    )}
-                >
-                    {isClosed ? <PanelRightClose size={20} className="shrink-0"/> : <PanelLeftClose size={20} />}
-                </Button>
-            </div>
+            <Navlinks 
+                sidebarState={{ isClosed }} 
+            />          
 
-            <SidebarLinks sidebarIsClosed={isClosed} />          
+            <DropdownMenu>
+                <DropdownMenuTrigger render={
+                    <UserArea sidebarState={{ isClosed }} isDark={isDark} />
+                } />
 
-            <UserArea sidebarIsClosed={isClosed} />
+                <DropdownMenuContent className={isClosed && "w-50"}>
+                    <DropdownMenuItem 
+                        onClick={() => setTheme(isDark ? "light" : "dark")}
+                        className="flex items-center cursor-pointer"
+                    >
+                        {isDark? <Moon /> : <Sun />}
+                        
+
+                        <div className="flex flex-col">
+                            {isDark? "Tema escuro" : "Tema claro"}
+
+                            <span className="text-xs text-muted-fg">
+                                Clique para alterar
+                            </span>
+                        </div>
+                    </DropdownMenuItem>
+
+                    <DropdownMenuSeparator />
+
+                    <DropdownMenuItem
+                        onClick={handleLogout}
+                        variant="destructive"
+                        className="cursor-pointer"
+                    >
+                        <LogOutIcon  />
+                        Sair da conta
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
         </aside>
     );
 }
