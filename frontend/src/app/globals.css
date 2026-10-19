@@ -46,6 +46,9 @@
 
     --info-bg: #e1f3fb;
     --info-fg: #087caa;
+   
+    --purple-bg: #e7dcff;
+    --purple-fg: #5427bd;
 
     --danger-bg: #fee5e5;
     --danger-fg: #cf2525;
@@ -126,6 +129,9 @@
 
     --color-info-bg: var(--info-bg);
     --color-info-fg: var(--info-fg);
+
+    --color-purple-bg: var(--purple-bg);
+    --color-purple-fg: var(--purple-fg);
 
     --color-danger-bg: var(--danger-bg);
     --color-danger-fg: var(--danger-fg);
