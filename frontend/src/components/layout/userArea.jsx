@@ -33,7 +33,7 @@ export default function UserArea({ sidebarState, ...props }) {
         <button 
             {...props}
             className={cn(
-                "w-full h-12 flex items-center px-1 gap-1",
+                "w-full h-12 flex items-center px-[1.5px] gap-1",
                 "rounded-sm cursor-pointer overflow-hidden relative",
                 "outline outline-offset-6",
                 "transition-colors duration-200",
@@ -45,7 +45,7 @@ export default function UserArea({ sidebarState, ...props }) {
                 "w-full h-full flex items-center gap-3",
             )}>
                 <span className={cn(
-                    "h-full w-9 flex items-center justify-center",
+                    "h-full w-10 flex items-center justify-center",
                     "absolute rounded-md text-sm",
                     "bg-primary text-primary-foreground",
                 )}>

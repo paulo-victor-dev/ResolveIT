@@ -5,8 +5,8 @@ const publicRoutes = [
 ];
 
 const privateRoutes = [
-    "/dashboard",
-    "/tickets"
+    // "/dashboard",
+    // "/tickets"
 ];
 
 export function proxy(request) {

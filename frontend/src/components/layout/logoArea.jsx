@@ -16,27 +16,23 @@ export default function LogoArea({ sidebarState, isDark }) {
 
     return (
         <div className={cn(
-            "w-full h-17.5 flex items-center relative",
+            "w-full h-14 shrink-0 flex items-center relative",
+            "overflow-hidden",
         )}>
-            <div className={cn(
-                "w-40 h-full relative",
-                "overflow-hidden",
-                "pointer-events-none",
-            )}>
-                {mounted && (
-                    <Image
-                        src={isDark ? "/logo-light.png" : "/logo-dark.png"}
-                        alt="logo-resolvelit"
-                        fill
-                        priority
-                        className={cn(
-                            "object-cover",
-                            "transition-transform duration-300",
-                            isClosed ? "-translate-x-20" : "translate-x-0",
-                        )}
-                    />
-                )}
-            </div>
+            {mounted && (
+                <Image
+                    src={isDark ? "/logo-light.png" : "/logo-dark.png"}
+                    alt="logo-resolvelit"
+                    width={200}
+                    height={200}
+                    priority
+                    className={cn(
+                        "-ml-2",
+                        "transition-transform duration-300",
+                        isClosed ? "-translate-x-20" : "translate-x-0",
+                    )}
+                />
+            )}
 
             <button
                 onClick={() => setIsClosed(prev => !prev)}

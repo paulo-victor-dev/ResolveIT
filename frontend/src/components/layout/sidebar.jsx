@@ -36,9 +36,9 @@ export default function Sidebar() {
 
     return (
         <aside className={cn(
-            "h-full flex flex-col gap-4 p-4 overflow-hidden",
+            "h-full shrink-0 flex flex-col gap-4 p-4 overflow-hidden",
             "transition-[width] duration-250",
-            isClosed ? "w-20" : "w-80"
+            isClosed ? "w-19" : "w-75"
         )}>
             <LogoArea 
                 sidebarState={{ isClosed, setIsClosed }} 
