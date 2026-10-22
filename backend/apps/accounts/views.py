@@ -37,7 +37,8 @@ class UserViewSet(viewsets.ModelViewSet):
         "id",
         "username",
         "email",
-        "date_joined"
+        "date_joined",
+        "last_login",
     ]
 
     @method_decorator(sensitive_post_parameters("password", "current_password"))
@@ -49,7 +50,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
         user = self.request.user
 
-        if user.is_superuser:
+        if user.role == User.Role.ADMIN:
             return queryset
 
         return queryset.filter(pk=user.pk)

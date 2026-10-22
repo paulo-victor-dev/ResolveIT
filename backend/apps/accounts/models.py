@@ -1,19 +1,18 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.utils import timezone
 
 from .managers import UserManager
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser):
     class Role(models.TextChoices):
+        ADMIN = "admin", "Administrador"   
         COMMON = "common", "Usuário"
         TECHNICIAN = "technician", "Técnico"
-        ADMIN = "admin", "Administrador"
 
     username = models.CharField(
         max_length=100,
-        unique=True,
         verbose_name="Nome de usuário"
     )
 
@@ -26,25 +25,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=20,
         choices=Role.choices,
         default=Role.COMMON,
-        verbose_name="Função"
+        verbose_name="Função",
+        help_text="Determina a função que esse usuário desempenhará no sistema."
     )
 
     is_active = models.BooleanField(
         default=True, 
         verbose_name="Status da Conta",
         help_text="Define se a conta desse usuário está ativa e pode ser utilizada para autenticação."
-    )
-
-    is_staff = models.BooleanField(
-        default=False, 
-        verbose_name="Membro",
-        help_text="Permite que esse usuário acesse o painel de administração."
-    )
-
-    is_superuser = models.BooleanField(
-        default=False, 
-        verbose_name="Administrador",
-        help_text="Concede a esse usuário todas as permissões disponíveis, sem a necessidade de atribuí-las individualmente."
     )
 
     date_joined = models.DateTimeField(

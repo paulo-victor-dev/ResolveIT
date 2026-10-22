@@ -21,6 +21,11 @@ class UserSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
+    last_login = serializers.DateTimeField(
+        format="%d/%m/%Y %H:%M:%S",
+        read_only=True
+    )
+
     role_display = serializers.CharField(
         source="get_role_display",
         read_only=True,
@@ -36,6 +41,7 @@ class UserSerializer(serializers.ModelSerializer):
             "role_display",
             "is_active",
             "date_joined",
+            "last_login",
             "password"
         ]
 
@@ -49,27 +55,10 @@ class UserSerializer(serializers.ModelSerializer):
         return fields
 
     def create(self, validated_data):
-        password = validated_data.pop("password", None)
-
-        user = User(**validated_data)
-
-        if password:
-            user.set_password(password)
-
-        user.save()
-
-        return user
+        return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
-        password = validated_data.pop("password", None)
-
-        user = super().update(instance, validated_data)
-
-        if password:
-            user.set_password(password)
-            user.save(update_fields=["password"])
-
-        return user
+        return User.objects.update_user(instance, **validated_data)
 
 
 class LoginSerializer(TokenObtainPairSerializer):
