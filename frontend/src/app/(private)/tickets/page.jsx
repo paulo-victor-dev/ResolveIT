@@ -1,8 +1,11 @@
+"use client";
+
 import { Ticket, Plus } from "lucide-react";
 
 import PageLayout from "@/components/layout/pageLayout";
 
 export default function Tickets() {
+
     const pageConfig = {
         page: {
             title: "Tickets",
@@ -18,7 +21,9 @@ export default function Tickets() {
     
     return (
         <PageLayout pageConfig={pageConfig}>
-            <h1>Tickets children</h1>
+            <div className="w-full p-4">
+    
+            </div>
         </PageLayout>
     );
 }

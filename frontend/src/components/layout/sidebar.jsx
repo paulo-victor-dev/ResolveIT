@@ -45,9 +45,7 @@ export default function Sidebar() {
                 isDark={isDark} 
             />
 
-            <Navlinks 
-                sidebarState={{ isClosed }} 
-            />          
+            <Navlinks />          
 
             <DropdownMenu>
                 <DropdownMenuTrigger render={

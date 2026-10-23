@@ -83,7 +83,6 @@ export default function Dashboard() {
     ];
 
     return (
-    
         <PageLayout pageConfig={pageConfig}>
             {/* Cards area */}
             <div className={cn(
@@ -114,8 +113,14 @@ export default function Dashboard() {
                 ))}
             </div>
 
-            <div>
+            <div className="w-full h-full grid grid-cols-2 gap-4">
+                <div className="bg-page-bg border rounded-xl p-4">
+                    <h1>Gráfico 1 em Torres</h1>
+                </div>
 
+                <div className="bg-page-bg border rounded-xl p-4">
+                    <h1>Gráfico 2 em Pizza</h1>
+                </div>
             </div>
         </PageLayout>
     );

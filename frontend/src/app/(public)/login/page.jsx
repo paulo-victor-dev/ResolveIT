@@ -31,8 +31,8 @@ export default function Login() {
     const handleLogin = async (values, form) => {
         try {
             await loginAction(values);
-
             router.push("/dashboard");
+
         } catch (error) {
             form.setError("root", {
                 message: error.message,

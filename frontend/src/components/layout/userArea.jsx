@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
-import { getCurrentUserAction } from "@/actions/authActions";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 import { cn } from "cn";
 
@@ -10,16 +8,7 @@ import { Code } from "lucide-react";
 
 export default function UserArea({ sidebarState, ...props }) {
     const { isClosed } = sidebarState;
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const getUser = async () => {
-            const user = await getCurrentUserAction();
-            setUser(user);
-        };
-
-        getUser();
-    }, []);
+   const { user } = useAuthContext();
 
     const getUserAcronym = () => {
         const username = user?.username; 

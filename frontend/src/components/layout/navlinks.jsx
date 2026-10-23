@@ -1,31 +1,46 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { LayoutDashboard, Ticket } from "lucide-react";
+import { LayoutDashboard, Ticket, Users } from "lucide-react";
 
 import { cn } from "cn";
 
-export default function Navlinks({ sidebarState }) {
-    const { isClosed } = sidebarState;
+import { useAuthContext } from "@/contexts/AuthContext";
+
+export default function Navlinks() {
     const pathname = usePathname()
 
-    const links = [
-        {
-            href: "/dashboard",
-            label: "Dashboard",
-            icon: <LayoutDashboard size={20} />,
-        },
+    const { user } = useAuthContext();   
 
-        {
-            href: "/tickets",
-            label: "Tickets",
-            icon: <Ticket size={20} />,
-        },
-    ];
+    const navLinks = () => {
+        const linksList = [
+            {
+                href: "/dashboard",
+                label: "Dashboard",
+                icon: <LayoutDashboard size={20} />,
+            },
+
+            {
+                href: "/tickets",
+                label: "Tickets",
+                icon: <Ticket size={20} />,
+            },
+        ] 
+
+        if (user?.role === "admin") {
+            linksList.push({
+                href: "/users",
+                label: "Usuários",
+                icon: <Users size={20} />
+            });
+        };
+
+        return linksList;
+    };  
     
     return (
         <ul className="h-full flex flex-col gap-2">
-            {links.map((val, idx) => (
+            {navLinks().map((val, idx) => (
                 <li key={idx} className={cn(
                     "w-full h-10 flex items-center pl-3",
                     "rounded-md overflow-hidden",

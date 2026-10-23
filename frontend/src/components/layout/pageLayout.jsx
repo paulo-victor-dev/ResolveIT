@@ -27,7 +27,7 @@ export default function PageLayout({ pageConfig, children }) {
                 </Button>
             </header>
 
-            <section className="w-full h-full">
+            <section className="w-full h-full flex flex-col gap-4">
                 {children}
             </section>
         </main>
