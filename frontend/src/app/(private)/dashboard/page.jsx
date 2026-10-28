@@ -11,7 +11,7 @@ import {
     MessageCircleCheck
 } from "lucide-react";
 
-import PageLayout from "@/components/layout/pageLayout";
+import DashboardLayout from "@/components/layout/dashboardLayout"; 
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function Dashboard() {
@@ -83,7 +83,7 @@ export default function Dashboard() {
     ];
 
     return (
-        <PageLayout pageConfig={pageConfig}>
+        <DashboardLayout pageConfig={pageConfig}>
             {/* Cards area */}
             <div className={cn(
                 "grid grid-cols-4 gap-4",
@@ -122,6 +122,6 @@ export default function Dashboard() {
                     <h1>Gráfico 2 em Pizza</h1>
                 </div>
             </div>
-        </PageLayout>
+        </DashboardLayout>
     );
 }

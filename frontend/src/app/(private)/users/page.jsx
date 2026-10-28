@@ -2,45 +2,40 @@
 
 import { useQueryParams } from "@/hooks/useQueryParams";
 
-import { pageCrud, pageConfig, pageFilters } from "./page-config";
+import { usersCrud, usersPageConfig } from "./page.config";
+import { columns } from "./table.config";
 
 import PageLayout from "@/components/layout/pageLayout";
-import Search from "@/components/layout/search";
-import Filter from "@/components/layout/filter";
 
 export default function Users() {
     const { 
-        search, setSearch, 
-        page, setPage, 
-        filters, setFilter 
+        search, 
+        pagination, 
+        filtering,
+        ordering
     } = useQueryParams();
 
-    const { data, isFetching, error } = pageCrud.useList({ search, page, ...filters });
+    const { data, isFetching } = usersCrud.useList({ 
+        search: search.searchValue, 
+        page: pagination.page, 
+        ...filtering.filters,
+        ordering: ordering.orderings,
+    });
     
-    return (
-        <PageLayout pageConfig={pageConfig}>
-            <div className="w-full flex items-center gap-4">
-                <Search 
-                    paramsState={{ setSearch, setPage }}
-                    placeholder="Pesquisar usuários..."
-                />
+    return <PageLayout 
+        pageConfig={usersPageConfig}
 
-                {pageFilters.map((filter) => (
-                    <Filter
-                        key={filter.title}
-                        title={filter.title}
-                        icon={filter.icon}
-                        items={filter.items}
-                        paramName={filter.paramName}
-                        setFilter={setFilter}
-                    />
-                ))}
-            </div>
+        paramsConfig={{
+            search, 
+            pagination, 
+            filtering,
+            ordering
+        }}
 
-            <div className="w-full h-full">
-                
-            
-            </div>
-        </PageLayout>
-    );
+        tableConfig={{
+            columns,
+            data: data?.results ?? [],
+            isFetching: isFetching
+        }}
+    />;
 }

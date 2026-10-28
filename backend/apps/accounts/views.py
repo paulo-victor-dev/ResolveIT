@@ -26,7 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
         filters.OrderingFilter
     ]
 
-    filterset_fields = ["is_active"]
+    filterset_fields = ["is_active", "role"]
 
     search_fields = [
         "username", 

@@ -2,38 +2,55 @@
 
 import { useState, useEffect } from "react";
 
-import { SearchIcon } from "lucide-react";
+import { cn } from "cn";
+
+import { SearchIcon, XIcon } from "lucide-react";
 
 import {
   InputGroup,
   InputGroupInput,
   InputGroupAddon,
-} from "@/components/ui/input-group"
+} from "@/components/ui/input-group";
 
-export default function Search({ paramsState, placeholder }) {
-    const { setSearch, setPage } = paramsState;
+export default function Search({ 
+    searchSetState, 
+    paginationSetState, 
+    placeholder
+}) {
     const [value, setValue] = useState("");
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setSearch(value);
-            setPage(1);
+            searchSetState(value);
+            paginationSetState(1);
         }, 500);
 
         return () => clearTimeout(timeout); 
     }, [value]);
 
     return (
-        <InputGroup className="w-100">
+        <InputGroup className="w-80 group">
             <InputGroupInput
-                type="text"
                 value={value}
                 onChange={e => setValue(e.target.value)}
                 placeholder={placeholder}
             />
 
-            <InputGroupAddon>
+            <InputGroupAddon
+                className="group-focus-within:text-page-fg"
+            >
                 <SearchIcon />
+            </InputGroupAddon>
+
+            <InputGroupAddon align="inline-end" 
+                className={cn(
+                    "cursor-pointer",
+                    "transition-colors",
+                    "hover:text-page-fg",
+                )}
+                onClick={() => setValue("")}
+            >
+                {value && <XIcon />}
             </InputGroupAddon>
         </InputGroup>
     );
