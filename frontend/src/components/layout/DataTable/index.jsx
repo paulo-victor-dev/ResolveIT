@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 
 import { cn } from "cn";
@@ -17,7 +15,7 @@ import {
     TableCell,
 } from "@/components/ui/table";
 
-import { Spinner } from "../ui/spinner";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function DataTable({
     columns = [],
@@ -112,6 +110,8 @@ export default function DataTable({
                                 ))}
                             </TableRow>
                         ))
+
+
                     ) : (
                         <TableRow>
                             <TableCell

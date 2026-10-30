@@ -89,6 +89,7 @@
     --color-accent: var(--muted-bg);
 
     --color-muted-foreground: var(--muted-fg);
+    --color-muted: var(--muted-bg);
 
     --color-secondary-foreground: var(--secondary-fg);
     --color-secondary: var(--secondary-bg);

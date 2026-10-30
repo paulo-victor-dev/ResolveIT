@@ -19,7 +19,6 @@ export const usersPageConfig = {
         },
     },
 
-
     filtersList: [
         {
             groupLabel: "Status da conta", paramName: "is_active",
@@ -37,5 +36,9 @@ export const usersPageConfig = {
                 {label: "Usuário comum", value: "common"},
             ]
         },
+    ],
+
+    formInputsList: [
+        {},
     ],
 };

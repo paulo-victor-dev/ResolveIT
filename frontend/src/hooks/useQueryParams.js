@@ -51,17 +51,9 @@ export const useQueryParams = () => {
         setOrderings([]);
     };
 
-    const setNextPage = () => {
-        
-    };
-
-    const setPreviousPage = () => {
-
-    };
-
     return {
         search: { searchValue, setSearchValue },
-        pagination: {  page, setPage },
+        pagination: { page, setPage },
         filtering: { filters, setFilters, setSingleFilter, clearSingleFilter, clearFilters },
         ordering: { orderings, handleSetOrderings, clearOrderings },
     };

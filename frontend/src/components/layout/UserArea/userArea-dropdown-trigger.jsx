@@ -1,14 +1,13 @@
 "use client";
 
-import { useAuthContext } from "@/contexts/AuthContext";
-
 import { cn } from "cn";
 
-import { Code } from "lucide-react";
+import { ChevronsUpDownIcon } from "lucide-react";
 
-export default function UserArea({ sidebarState, ...props }) {
-    const { isClosed } = sidebarState;
-   const { user } = useAuthContext();
+import { useAuthContext } from "@/contexts/AuthContext";
+
+export default function UserAreaDropdownTrigger({ sidebarIsClosed, ...props }) {
+    const { user } = useAuthContext();
 
     const getUserAcronym = () => {
         const username = user?.username; 
@@ -17,9 +16,9 @@ export default function UserArea({ sidebarState, ...props }) {
 
         return username.slice(0, 1).toUpperCase();
     };
-
+    
     return (
-        <button 
+        <button
             {...props}
             className={cn(
                 "w-full h-12 flex items-center px-[1.5px] gap-1",
@@ -45,7 +44,7 @@ export default function UserArea({ sidebarState, ...props }) {
                     "max-w-30 flex flex-col text-start ml-12",
                     "text-nowrap",
                     "transition-[visibility] duration-200",
-                    isClosed && "invisible",
+                    sidebarIsClosed && "invisible",
                 )}>
                     <span className="font-semibold text-sm overflow-hidden text-ellipsis">
                         {user?.username}
@@ -57,13 +56,11 @@ export default function UserArea({ sidebarState, ...props }) {
                 </div>
             </div>
 
-            <Code size={18} className={cn(
+            <ChevronsUpDownIcon size={18} className={cn(
                 "text-muted-fg",
-                "rotate-90",
                 "transition-[visibility] duration-200",
-                isClosed && "invisible"
+                sidebarIsClosed && "invisible"
             )} />
         </button>
     );
-
 }

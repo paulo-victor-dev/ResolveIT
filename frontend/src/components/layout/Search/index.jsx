@@ -13,16 +13,16 @@ import {
 } from "@/components/ui/input-group";
 
 export default function Search({ 
-    searchSetState, 
-    paginationSetState, 
+    setSearchValue, 
+    setPage, 
     placeholder
 }) {
     const [value, setValue] = useState("");
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            searchSetState(value);
-            paginationSetState(1);
+            setSearchValue(value);
+            setPage(1);
         }, 500);
 
         return () => clearTimeout(timeout); 

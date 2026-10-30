@@ -2,13 +2,20 @@
 
 import { cn } from "cn";
 
-import { CircleCheckIcon, CircleXIcon } from "lucide-react";
+import { 
+    CircleCheckIcon, 
+    CircleXIcon
+} from "lucide-react";
 
 import { createColumnHelper } from "@tanstack/react-table";
 
+import { usersCrud } from "./page-config";
+
+import TableDropdown from "@/components/layout/DataTable/table-dropdown";
+
 const columnHelper = createColumnHelper();
 
-export const columns = columnHelper.columns([
+export const tableColumns = columnHelper.columns([
     columnHelper.accessor("id", {
         header: "ID"
     }),
@@ -55,10 +62,14 @@ export const columns = columnHelper.columns([
         header: "Último acesso"
     }),
 
-    columnHelper.accessor("action", {
+    columnHelper.accessor("actions", {
         header: "",
         cell: ({ row }) => {
-            return <>...</>
+            return <TableDropdown 
+                rowData={row.original}
+                onEdit={usersCrud.usePatch}
+                onDelete={usersCrud.useRemove}
+            />;
         },
     }),
 ]);

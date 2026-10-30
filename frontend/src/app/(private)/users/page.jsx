@@ -2,10 +2,10 @@
 
 import { useQueryParams } from "@/hooks/useQueryParams";
 
-import { usersCrud, usersPageConfig } from "./page.config";
-import { columns } from "./table.config";
+import { usersCrud, usersPageConfig } from "./page-config";
+import { tableColumns } from "./table-columns";
 
-import PageLayout from "@/components/layout/pageLayout";
+import PageLayout from "@/components/layout/PageLayout";
 
 export default function Users() {
     const { 
@@ -21,7 +21,7 @@ export default function Users() {
         ...filtering.filters,
         ordering: ordering.orderings,
     });
-    
+
     return <PageLayout 
         pageConfig={usersPageConfig}
 
@@ -33,8 +33,8 @@ export default function Users() {
         }}
 
         tableConfig={{
-            columns,
-            data: data?.results ?? [],
+            columns: tableColumns,
+            data,
             isFetching: isFetching
         }}
     />;

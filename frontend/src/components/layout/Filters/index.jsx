@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import { FunnelIcon, ChevronDownIcon } from "lucide-react";
 
 import {
@@ -9,29 +7,17 @@ import {
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuSeparator
-} from "../ui/dropdown-menu";
-import { Label } from "../ui/label";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Button } from "../ui/button";
+} from "@/components/ui/dropdown-menu";
+
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Button } from "@/components/ui/button";
 
 export default function Filters({ filtersData }) {
     const { filtersList, filtering } = filtersData;
 
-    const [open, setOpen] = useState(false);
-    const [filtersDisplay, setFiltersDisplay] = useState({});
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-       
-        const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData.entries());
-        
-        filtering.setFilters(data);
-        setOpen(false);
-    };
-
     return (
-        <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenu>
             <DropdownMenuTrigger render={
                 <Button variant="outline">
                     <FunnelIcon />

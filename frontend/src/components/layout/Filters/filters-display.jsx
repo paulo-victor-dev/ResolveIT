@@ -1,15 +1,15 @@
 import { FunnelXIcon, ListXIcon } from "lucide-react";
 
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
-export default function FiltersDisplay({ filtersData }) {
-    const { filtersList, filtering, ordering } = filtersData;
+export default function FiltersDisplay({ filtersData, orderingState }) {
+    const { filtersList, filtering } = filtersData;
 
     const hasActiveFilters = Object.values(filtering.filters ?? {})
         .filter(value => value !== "" && value !== null)
         .length > 0;
 
-    const hasActiveOrderings = ordering.orderings.length > 0;
+    const hasActiveOrderings = orderingState.orderings.length > 0;
 
     return (
         <div className="h-2 flex items-center gap-2">
@@ -53,7 +53,7 @@ export default function FiltersDisplay({ filtersData }) {
 
             {hasActiveOrderings && (
                 <Button variant="destructive" size="xs"
-                    onClick={() => ordering.clearOrderings()}
+                    onClick={() => orderingState.clearOrderings()}
                 >
                     Limpar ordenações
                     <ListXIcon />

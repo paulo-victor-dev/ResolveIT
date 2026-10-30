@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { usePathname } from "next/navigation";
 
 import { LayoutDashboard, Ticket, Users } from "lucide-react";
@@ -7,12 +8,12 @@ import { cn } from "cn";
 
 import { useAuthContext } from "@/contexts/AuthContext";
 
-export default function Navlinks() {
+export default function SidebarLinks() {
     const pathname = usePathname()
 
     const { user } = useAuthContext();   
 
-    const navLinks = () => {
+    const links = () => {
         const linksList = [
             {
                 href: "/dashboard",
@@ -40,7 +41,7 @@ export default function Navlinks() {
     
     return (
         <ul className="h-full flex flex-col gap-2">
-            {navLinks().map((val, idx) => (
+            {links().map((val, idx) => (
                 <li key={idx} className={cn(
                     "w-full h-10 flex items-center pl-3",
                     "rounded-md overflow-hidden",
