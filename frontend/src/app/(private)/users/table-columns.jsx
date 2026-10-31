@@ -11,6 +11,8 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 import { usersCrud } from "./page-config";
 
+import { useGetModalConfig } from "@/hooks/useGetModalConfig";
+
 import TableDropdown from "@/components/layout/DataTable/table-dropdown";
 
 const columnHelper = createColumnHelper();
@@ -62,14 +64,18 @@ export const tableColumns = columnHelper.columns([
         header: "Último acesso"
     }),
 
-    columnHelper.accessor("actions", {
-        header: "",
+    columnHelper.display({
+        id: "actions",
+
         cell: ({ row }) => {
-            return <TableDropdown 
-                rowData={row.original}
-                onEdit={usersCrud.usePatch}
-                onDelete={usersCrud.useRemove}
-            />;
+            const modalConfig = useGetModalConfig({
+                rowData: row.original,
+                modalTitlePrefix: "usuário",
+                onEdit: () => usersCrud.usePatch(),
+                onDelete: () => usersCrud.useRemove()
+            })
+
+            return <TableDropdown  />;
         },
     }),
 ]);

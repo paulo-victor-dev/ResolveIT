@@ -1,20 +1,44 @@
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogFooter,
+  DialogClose
 } from "@/components/ui/dialog";
 
-export default function Modal({ openState, data, onEdit, onDelete }) {
-    const { modalIsOpen, setModalIsOpen } = openState;
+import { Button } from "@/components/ui/button";
 
+export default function Modal({ openState, modalConfig }) {
+    const { modalIsOpen, setModalIsOpen } = openState;
+    const { modalTitle, action, data } = modalConfig;
+    
     return (
-        <Dialog>
-            <DialogTrigger render={trigger} />
+        <Dialog 
+            open={isOpen} 
+            onOpenChange={setIsOpen}
+        >
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>
+                        {modalTitle}
+                    </DialogTitle>
+                </DialogHeader>
+
+                <>
+                    Form Aqui!
+                </>
+
+                <DialogFooter>
+                    <DialogClose render={
+                        <Button variant="outline">
+                            Cancelar
+                        </Button>
+                    } />
+
+
+                </DialogFooter>
+            </DialogContent>
         </Dialog>
     );
 }

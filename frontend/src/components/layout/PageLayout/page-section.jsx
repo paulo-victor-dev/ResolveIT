@@ -2,6 +2,7 @@ import PageSearch from "./page-search";
 import FiltersDisplay from "../Filters/filters-display";
 import DataTable from "../DataTable";
 import Pagination from "../Pagination";
+import Modal from "../Modal";
 
 export default function PageSection({ 
     pageConfig = {}, 
@@ -39,6 +40,10 @@ export default function PageSection({
                     data={data ?? []}
                 />
             </div>
+
+            <Modal
+                
+            />
         </section>
     );
 }
