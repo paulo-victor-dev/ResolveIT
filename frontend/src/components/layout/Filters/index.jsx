@@ -14,7 +14,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 
 export default function Filters({ filtersData }) {
-    const { filtersList, filtering } = filtersData;
+    const { filtersFields, filtering } = filtersData;
 
     return (
         <DropdownMenu>
@@ -28,7 +28,7 @@ export default function Filters({ filtersData }) {
 
             <DropdownMenuContent className="w-60">
                 <div className="w-full flex flex-col p-4">
-                    {filtersList.map((filter, idx) => (
+                    {filtersFields.map((filter, idx) => (
                         <RadioGroup 
                             key={filter.groupLabel} 
                             name={filter.paramName}
@@ -64,7 +64,7 @@ export default function Filters({ filtersData }) {
                                 </Label>
                             ))}
 
-                            {idx !== filtersList.length - 1 && (
+                            {idx !== filtersFields.length - 1 && (
                                 <DropdownMenuSeparator className="mt-2 mb-4" />
                             )}
                         </RadioGroup>

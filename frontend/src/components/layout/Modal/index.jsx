@@ -1,44 +1,19 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose
-} from "@/components/ui/dialog";
+"use client";
 
-import { Button } from "@/components/ui/button";
+import { useModalContext } from "@/contexts/ModalContext";
 
-export default function Modal({ openState, modalConfig }) {
-    const { modalIsOpen, setModalIsOpen } = openState;
-    const { modalTitle, action, data } = modalConfig;
+import ModalForm from "./modal-form";
+import ModalAlert from "./modal-alert";
+
+export default function Modal() {
+    const { modalConfig, closeModal } = useModalContext();
     
     return (
-        <Dialog 
-            open={isOpen} 
-            onOpenChange={setIsOpen}
-        >
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>
-                        {modalTitle}
-                    </DialogTitle>
-                </DialogHeader>
-
-                <>
-                    Form Aqui!
-                </>
-
-                <DialogFooter>
-                    <DialogClose render={
-                        <Button variant="outline">
-                            Cancelar
-                        </Button>
-                    } />
-
-
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+        <>
+            {modalConfig.typeData.type === "form" 
+                ? <ModalForm config={modalConfig} onClose={closeModal} />
+                : <ModalAlert config={modalConfig} onClose={closeModal} />
+            }
+        </>
     );
 }

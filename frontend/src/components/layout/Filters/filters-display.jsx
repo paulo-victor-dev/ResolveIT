@@ -3,7 +3,7 @@ import { FunnelXIcon, ListXIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function FiltersDisplay({ filtersData, orderingState }) {
-    const { filtersList, filtering } = filtersData;
+    const { filtersFields, filtering } = filtersData;
 
     const hasActiveFilters = Object.values(filtering.filters ?? {})
         .filter(value => value !== "" && value !== null)
@@ -16,7 +16,7 @@ export default function FiltersDisplay({ filtersData, orderingState }) {
             {Object.entries(filtering.filters ?? {})
                 .filter(([, value]) => value !== "" && value != null)
                 .map(([paramName, value]) => {
-                    const filter = filtersList.find(
+                    const filter = filtersFields.find(
                         (filter) => filter.paramName === paramName
                     );
 

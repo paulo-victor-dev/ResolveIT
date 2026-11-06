@@ -3,8 +3,8 @@ import PageSection from "./page-section";
 
 export default function PageLayout({ 
     pageConfig = {}, 
-    paramsConfig = {}, 
-    tableConfig = {}, 
+    queryConfig = {},
+    componentConfig = {},
     type="default",
     children = null
 }) {
@@ -15,8 +15,8 @@ export default function PageLayout({
             {type === "default" ? (
                 <PageSection
                     pageConfig={pageConfig}
-                    paramsConfig={paramsConfig}
-                    tableConfig={tableConfig}
+                    queryConfig={queryConfig}
+                    componentConfig={componentConfig}
                 />
             ) : (
                 children

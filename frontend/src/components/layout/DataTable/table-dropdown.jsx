@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useModalContext } from "@/contexts/ModalContext";
 
 import {
     EllipsisVerticalIcon,
@@ -14,29 +16,43 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import Modal from "../Modal";
 
-export default function TableDropdown({ rowData, modalTitlePrefix, onEdit, onDelete }) {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    
+export default function TableDropdown({ 
+    rowData, 
+    formData, 
+    onEdit, 
+    onDelete,
+    modalTitleSufix 
+}) {
+    const { openModal } = useModalContext();
 
-    const handleOpenModal = (action) => {
-        if (action === "edit") {
-            setModalConfig({
-                modalTitle: `Editando - ${modalTitlePrefix}`,
-                action: onEdit,
+    const openModalConfig = {
+        edit: {
+            title: `Editar ${modalTitleSufix}`,
+            action: {
+                execute: onEdit.patch,
+                isLoading: onEdit.isPatching
+            },
+
+            typeData: {
+                    type: "form",
+                    data: rowData,
+                    formData
+            },
+        },
+
+        delete: {
+            title: `Deletar ${modalTitleSufix}`,
+            action: {
+                execute: onDelete.remove,
+                isLoading: onDelete.isRemoving
+            },
+
+            typeData: {
+                type: "alert",
                 data: rowData
-            });
-
-        } else if (action === "delete") {
-            setModalConfig({
-                modalTitle: `Deletando - ${modalTitlePrefix}`,
-                action: onDelete,
-                data: rowData
-            });
+            }
         }
-
-        setModalIsOpen(true);
     };
     
     return (
@@ -51,7 +67,7 @@ export default function TableDropdown({ rowData, modalTitlePrefix, onEdit, onDel
                 <DropdownMenuContent>
                     <DropdownMenuItem
                         className="cursor-pointer"
-                        onClick={() => handleOpenModal("edit")}
+                        onClick={() => openModal(openModalConfig.edit)}
                     >
                         <PencilIcon />
                         Editar
@@ -60,18 +76,13 @@ export default function TableDropdown({ rowData, modalTitlePrefix, onEdit, onDel
                     <DropdownMenuItem
                         variant="destructive"
                         className="cursor-pointer"
-                        onClick={() => handleOpenModal("delete")}
+                        onClick={() => openModal(openModalConfig.delete)}
                     >
                         <TrashIcon />
                         Deletar
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
-        
-            <Modal
-                openState={{ modalIsOpen, setModalIsOpen }}
-                modalConfig={modalConfig}
-            />
         </>
     );
 }

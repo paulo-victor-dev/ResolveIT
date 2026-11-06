@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ModalProvider } from "@/contexts/ModalContext";
 
 export default function Providers({ children }) {
     const [queryClient] = useState(() => new QueryClient());
@@ -19,7 +20,9 @@ export default function Providers({ children }) {
         >
             <QueryClientProvider client={queryClient}>
                 <AuthProvider>
-                    {children}
+                    <ModalProvider>
+                        {children}
+                    </ModalProvider>
                 </AuthProvider>
             </QueryClientProvider>
         </ThemeProvider>

@@ -1,128 +1,50 @@
 "use client";
 
-import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
-
 import { cn } from "cn";
 
-import { flexRender, useTable } from "@tanstack/react-table";
+import { useTable } from "@tanstack/react-table";
 
-import {
-    Table,
-    TableHeader,
-    TableHead,
-    TableBody,
-    TableRow,
-    TableCell,
-} from "@/components/ui/table";
+import { getTableColumns } from "./table-columns";
 
-import { Spinner } from "@/components/ui/spinner";
+import { Table } from "@/components/ui/table";
+
+import TableHeader from "./table-header";
+import TableBody from "./table-body";
 
 export default function DataTable({
-    columns = [],
-    data = [],
+    data,
     isFetching = false,
-    orderingState
+    crud,
+
+    dataFields = [],
+    orderingState,
+
+    formSchema,
+    modalTitleSufix
 }) {
-    const { orderings, handleSetOrderings } = orderingState;
+    const columns = getTableColumns(dataFields, crud, formSchema, modalTitleSufix);
 
     const table = useTable({
         columns,
-        data: Array.isArray(data) ? data : [],
+        data
     });
-
-    const rows = table.getRowModel().rows;
-
-    const getOrderingIcon = (field) => {
-        if (field === "action") return;
-
-        const current = orderings.find(
-            (item) => item.replace("-", "") === field
-        );
-
-        if (!current) return null;
-
-        return current.startsWith("-") ? (
-            <ArrowDownIcon className="size-4" />
-        ) : (
-            <ArrowUpIcon className="size-4" />
-        );
-    }; 
 
     return (
         <div className={cn(
             "w-full h-full overflow-hidden",
             "rounded-md border",
         )}>
-            <Table className="">
-                <TableHeader className="bg-page-bg text-sm">
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow className="text-sm" key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <TableHead 
-                                    key={header.id}
-                                    className="h-12 px-4 text-sm font-bold "
-                                >
-                                    <div
-                                        onClick={() => handleSetOrderings(header.column.columnDef.accessorKey)} 
-                                        className={cn(
-                                            "flex items-center gap-2",
-                                            "rounded-lg cursor-pointer",
-                                            "transition-colors",
-                                            "hover:underline"
-                                        )}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
+            <Table>
+                <TableHeader
+                    orderingState={orderingState}
+                    tableState={table}
+                />
 
-                                        {getOrderingIcon(header.column.columnDef.accessorKey)}
-                                    </div>
-                                </TableHead>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-
-                <TableBody>
-                    {isFetching ? (
-                        <TableRow>
-                            <TableCell
-                                colSpan={Math.max(columns.length, 1)}
-                                className="h-24 text-center"
-                            >
-                                <div className="flex justify-center">
-                                    <Spinner className="size-10" />
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    ) : rows.length > 0 ? (
-                        rows.map((row) => (
-                            <TableRow className="text-xs" key={row.id}>
-                                {row.getAllCells().map((cell) => (
-                                    <TableCell className="h-12 px-4" key={cell.id}>
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        ))
-
-
-                    ) : (
-                        <TableRow>
-                            <TableCell
-                                colSpan={Math.max(columns.length, 1)}
-                                className="h-24 text-center"
-                            >
-                                Nenhum resultado encontrado.
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
+                <TableBody 
+                    tableState={table}
+                    isFetching={isFetching}
+                    columns={columns}
+                />
             </Table>
         </div>
     );

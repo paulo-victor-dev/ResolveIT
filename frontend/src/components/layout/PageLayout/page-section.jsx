@@ -6,44 +6,51 @@ import Modal from "../Modal";
 
 export default function PageSection({ 
     pageConfig = {}, 
-    paramsConfig = {}, 
-    tableConfig = {}
+    queryConfig = {},
+    componentConfig = {},
 }) {
-    const { page, filtersList, formInputsList } = pageConfig;
-    const { search, pagination, filtering, ordering } = paramsConfig;
-    const { columns, data, isFetching } = tableConfig;
+    const { data, isFetching, params, crud } = queryConfig;
+
+    const { search, pagination, filtering, ordering } = params.raw;
+
+    const { dataFields, filtersFields, formSchema } = componentConfig;
 
     return (
         <section className="w-full h-full flex flex-col gap-6">
             <PageSearch 
                 search={search}
                 pagination={pagination}
-                page={page}
-                filtersData={{ filtersList, filtering }}
+                page={pageConfig}
+                filtersData={{ filtersFields, filtering }}
+                crud={crud}
+                modalData={{ dataFields, formSchema }}
             />
 
             <FiltersDisplay 
-                filtersData={{ filtersList, filtering }}
+                filtersData={{ filtersFields, filtering }}
                 orderingState={ordering}    
             />
 
             <div className="h-full flex flex-col">
                 <DataTable 
-                    columns={columns}
                     data={data?.results ?? []}
                     isFetching={isFetching}
+                    crud={crud}
+                    
+                    dataFields={dataFields}
                     orderingState={ordering}
+
+                    formSchema={formSchema}
+                    modalTitleSufix={pageConfig.modalTitleSufix}
                 />
 
                 <Pagination 
                     pagination={pagination}
-                    data={data ?? []}
+                    data={data ?? {}}
                 />
             </div>
 
-            <Modal
-                
-            />
+            <Modal />
         </section>
     );
 }

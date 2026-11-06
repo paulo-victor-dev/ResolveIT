@@ -1,41 +1,49 @@
 "use client";
 
-import { useQueryParams } from "@/hooks/useQueryParams";
+import { UsersIcon, UserRoundPlusIcon } from "lucide-react";
 
-import { usersCrud, usersPageConfig } from "./page-config";
-import { tableColumns } from "./table-columns";
+import { useGetPageConfig } from "@/hooks/useGetPageConfig";
+
+import { ENDPOINTS } from "@/services/http/endpoints";
+
+import { dataFieldsConfig } from "./configs/dataFields-config";
+import { filtersFieldsConfig } from "./configs/filtersFields-config";
+import { schemaConfig } from "./configs/schema-config";
 
 import PageLayout from "@/components/layout/PageLayout";
 
 export default function Users() {
-    const { 
-        search, 
-        pagination, 
-        filtering,
-        ordering
-    } = useQueryParams();
+    const { crud, params, page } = useGetPageConfig({
+        endpoint: ENDPOINTS.users,
+        resource: "users",
 
-    const { data, isFetching } = usersCrud.useList({ 
-        search: search.searchValue, 
-        page: pagination.page, 
-        ...filtering.filters,
-        ordering: ordering.orderings,
+        title: "Usuários",
+        subTitle: "Gerencie os usuários, suas permissões e funções de acesso ao sistema.",
+        icon: <UsersIcon />,
+        searchPlaceholder: "Buscar usuários...",
+        modalTitleSufix: "usuário",
+
+        btnText: "Novo usuário",
+        btnIcon: <UserRoundPlusIcon />,
+        btnFn: null
     });
 
-    return <PageLayout 
-        pageConfig={usersPageConfig}
+    const { data, isFetching } = crud.useList(params.inListQuery);
 
-        paramsConfig={{
-            search, 
-            pagination, 
-            filtering,
-            ordering
+    return <PageLayout 
+        pageConfig={{ ...page }}
+
+        queryConfig={{
+            data,
+            isFetching,
+            params,
+            crud
         }}
 
-        tableConfig={{
-            columns: tableColumns,
-            data,
-            isFetching: isFetching
+        componentConfig={{
+            dataFields: dataFieldsConfig,
+            filtersFields: filtersFieldsConfig,
+            formSchema: schemaConfig,
         }}
     />;
 }
