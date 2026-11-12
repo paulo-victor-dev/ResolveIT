@@ -9,30 +9,30 @@ import {
     FieldLabel 
 } from "@/components/ui/field";
 
-import { Input } from "@/components/ui/input";
+import { handleSetInput, handleGetFieldsList } from "./form-utils";
 
-export default function FormFields({ fieldsList, form }) {
+export default function FormFields({ fieldsList, form, formType }) {
+    const formFieldsList = handleGetFieldsList(fieldsList, formType);
+
     return (
         <>
-            {fieldsList.map((val, idx) => (
+            {formFieldsList.map((val, idx) => (
                 <FieldGroup key={idx}>
                     <Controller
                         name={val.name}
                         control={form.control}
                         render={({ field, fieldState }) => (
+                            
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor={val.name}>
                                     {val.label}
                                 </FieldLabel>
 
-                                <Input
-                                    {...field}
-                                    id={val.name}
-                                    type={val.type}
-                                    autoComplete={val.autoComplete}
-                                    aria-invalid={fieldState.invalid}
-                                    placeholder={val.placeholder}
-                                />
+                                {handleSetInput(
+                                    val,
+                                    field,
+                                    fieldState.invalid
+                                )}
 
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />

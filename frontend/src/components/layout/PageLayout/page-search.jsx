@@ -19,7 +19,7 @@ export default function PageSearch({
 }) {
     const { openModal } = useModalContext();
 
-    const { create, isPending } = crud.useCreate();
+    const { create } = crud.useCreate();
     
     return (
         <div className="flex items-start justify-between">
@@ -44,14 +44,11 @@ export default function PageSearch({
                 <Button
                     onClick={() => openModal({
                         title: `Criar ${page.modalTitleSufix}`,
-                        action: { 
-                            execute: create, 
-                            isLoading: isPending 
-                        },
+                        action: (body = {}) => create(body),
                         typeData: {
                             type: "form",
                             data: null,
-                            formData: { ...modalData }
+                            formData: { ...modalData, formType: "create" }
                         }
                     })}
                 >

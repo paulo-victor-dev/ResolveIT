@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import {
   AlertDialog,
   AlertDialogContent,
@@ -15,15 +19,23 @@ export default function ModalAlert({ config, onClose }) {
     const { 
         isOpen,
         title,
-        action,
-        typeData
+        action
     } = config;
-
-    const { execute, isLoading } = action;
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleDelete = async () => {
-        await execute(typeData.data?.id);
-        onClose();
+        try {
+            setIsLoading(true);
+
+            await action();
+            onClose();
+
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            setIsLoading(false);
+        };
     };
 
     return (

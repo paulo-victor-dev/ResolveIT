@@ -7,4 +7,8 @@ export const schemaConfig = z.object({
         .max(100, "Limite de 100 caracteres"), 
 
     email: z.email("Digite um e-mail válido"),
+
+    password: z
+        .string()
+        .min(1, "A senha não pode estar vazia"),
 });

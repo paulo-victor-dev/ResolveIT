@@ -29,24 +29,18 @@ export default function TableDropdown({
     const openModalConfig = {
         edit: {
             title: `Editar ${modalTitleSufix}`,
-            action: {
-                execute: onEdit.patch,
-                isLoading: onEdit.isPatching
-            },
+            action: (body = {}) => onEdit(rowData.id, body),
 
             typeData: {
-                    type: "form",
-                    data: rowData,
-                    formData
+                type: "form",
+                data: rowData,
+                formData: { ...formData, formType: "edit" } 
             },
         },
 
         delete: {
             title: `Deletar ${modalTitleSufix}`,
-            action: {
-                execute: onDelete.remove,
-                isLoading: onDelete.isRemoving
-            },
+            action: () => onDelete(rowData.id),
 
             typeData: {
                 type: "alert",

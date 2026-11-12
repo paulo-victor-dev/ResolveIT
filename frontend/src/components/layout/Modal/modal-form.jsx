@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { cn } from "cn";
 
 import {
@@ -21,18 +23,21 @@ export default function ModalForm({ config, onClose }) {
         action,
         typeData: { data, formData }
     } = config;
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { execute, isLoading } = action;
-
-    const handleSubmit = async (values, form) => {
+    const handleSubmit = async (form) => {
         try {
-            await execute(values);
+            setIsLoading(true);
+
+            await action(form.getValues());
             onClose(); 
 
         } catch (error) {
             form.setError("root", {
                 message: error.message,
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -44,7 +49,7 @@ export default function ModalForm({ config, onClose }) {
             }}
         >
             <DialogContent className={cn(
-                "max-h-[calc()]"
+                "h-[calc(100dvh-5rem)]"
             )}>
                 <DialogHeader>
                     <DialogTitle>
@@ -52,9 +57,10 @@ export default function ModalForm({ config, onClose }) {
                     </DialogTitle>
                 </DialogHeader>
 
-                <div className="overflow-y-scroll px-2 max-h-[calc(100dvh-5rem)]">
+                <div className="overflow-y-scroll px-2">
                     <Form
                         id={"modal-form"}
+                        formType={formData.formType}
                         fieldsList={formData.dataFields}
                         fieldsSchema={formData.formSchema}
                         defaultValues={data}

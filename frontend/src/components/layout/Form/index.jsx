@@ -11,6 +11,7 @@ import FormFields from "./form-fields";
 
 export default function Form({ 
     id = "",
+    formType = "all",
     fieldsList = [],
     fieldsSchema,
     defaultValues = {},
@@ -25,12 +26,12 @@ export default function Form({
         },
     });
 
-    const isLoading = form.formState.isSubmitting;
+    const isLoading = form.formState.isSubmitting;  
 
     return (
         <form
             id={id}
-            onSubmit={form.handleSubmit((values) => onSubmit(values, form))}
+            onSubmit={form.handleSubmit(() => onSubmit(form))}
             noValidate
             className="w-full h-full flex flex-col gap-5"
         >
@@ -42,7 +43,7 @@ export default function Form({
                 </div>
             )}
 
-            <FormFields fieldsList={fieldsList} form={form} />
+            <FormFields fieldsList={fieldsList} form={form} formType={formType} />
 
             {subBtnText && (
                 <Button type="submit" disabled={isLoading}>
